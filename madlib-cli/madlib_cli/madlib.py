@@ -1,8 +1,8 @@
 import re
 
-def read_template():
+def read_template(fileURL):
   try:
-      with open('./asset/madlibGameText.txt') as file:
+      with open(fileURL) as file:
         return file.read()
   except FileNotFoundError:
     print('file not found')
@@ -26,7 +26,8 @@ def merge(text,parse,list):
   return text  
 
 def madlibGame():
-    textOt=read_template() 
+    fURL='./assets/madlibGameText.txt'
+    textOt=read_template(fURL) 
     parseOt=parse_template(textOt)
     answer=askUserQ(parseOt)
     # print(merge(textOt,parseOt,answer))  
