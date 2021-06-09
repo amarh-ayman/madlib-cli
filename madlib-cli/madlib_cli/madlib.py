@@ -7,8 +7,8 @@ def read_template(fileURL):
   try:
       with open(fileURL) as file:
         return file.read().strip()
-  except FileNotFoundError:
-        return 'FileNotFoundError'
+  except ZeroDivisionError:
+        raise 
 
 def parse_template(text):
   pattern=(r'{(.+?)}')
