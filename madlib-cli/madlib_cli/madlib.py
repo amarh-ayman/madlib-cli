@@ -1,16 +1,22 @@
 import re
 
 def read_template(fileURL):
+  '''
+  function to read file text
+  '''
   try:
       with open(fileURL) as file:
-        return file.read()
+        return file.read().strip()
   except FileNotFoundError:
-    print('file not found')
+        return 'FileNotFoundError'
 
 def parse_template(text):
   pattern=(r'{(.+?)}')
   wordWithBrackets=re.findall(pattern,text)
-  return wordWithBrackets
+  restTheText=text
+  for item in wordWithBrackets:
+    restTheText=restTheText.replace(item,'')
+  return (restTheText,tuple(wordWithBrackets))
 
 
 def askUserQ(Q):
@@ -20,14 +26,15 @@ def askUserQ(Q):
     listOfParse+=[ask]
   return listOfParse
 
-def merge(text,parse,list):
-  for item in range(len(parse)):
-    text=text.replace('{'+parse[item]+'}' ,list[item] )
-  return text  
+def merge(text,parse):
+  return text.format(*parse)  
 
-def madlibGame():
+if __name__=="__main__":
     fURL='./assets/madlibGameText.txt'
     textOt=read_template(fURL) 
-    parseOt=parse_template(textOt)
+    parseOt=parse_template(textOt)[1]
+    restext=parse_template(textOt)[0]
+    print(restext)
     answer=askUserQ(parseOt)
     # print(merge(textOt,parseOt,answer))  
+
